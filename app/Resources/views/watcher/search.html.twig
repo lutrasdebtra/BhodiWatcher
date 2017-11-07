@@ -1,0 +1,57 @@
+{# app/Resources/views/watcher/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-12">
+                <h2>Bhodi Failed Job Watcher</h2>
+            </div>
+        </div>
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        <div class="form-row">
+            <div class="col-3">
+                {{ form_label(form.column_name, 'Column Name', { 'label_attr': {'class': 'sr-only'} }) }}
+                {{ form_widget(form.column_name, { 'attr': {'class' :'form-control-lg'} }) }}
+            </div>
+            <div class="col-8">
+                {{ form_label(form.column_value, 'Column Value', { 'label_attr': {'class': 'sr-only'} }) }}
+                {{ form_widget(form.column_value, { 'attr': {'class' :'form-control-lg','placeholder': 'Query'} }) }}
+            </div>
+            <div class="col-1">
+                <input type="submit" class="btn btn-primary btn-lg pr-0 pl-0 w-100"/>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12">
+                <table class="table">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Field 1</th>
+                        <th scope="col">Field 2</th>
+                        <th scope="col-1"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Test</td>
+                        <td>Test</td>
+                        <td><a href="#"><i class="fa fa-envelope-o fa-lg fa-pull-right" aria-hidden="true"></i></a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Test</td>
+                        <td>Test</td>
+                        <td><a href="#"><i class="fa fa-envelope-o fa-lg fa-pull-right" aria-hidden="true"></i></a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
