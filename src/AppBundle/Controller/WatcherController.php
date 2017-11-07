@@ -54,7 +54,7 @@ class WatcherController extends Controller
         );
         $message = (new \Swift_Message('Failed Job'))
             ->setFrom('synbioadmin@lanzatech.com')
-            ->setTo('stuart.bradley@lanzatech.com')
+            ->setTo($request->get('WatchInputEmail'))
             ->setBody(
                 $this->renderView(
                     'Emails/job.html.twig',

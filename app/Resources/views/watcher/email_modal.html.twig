@@ -8,28 +8,26 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form novalidate>
+            <form action="/watcher/email/1" method="post" id="modalForm">
+                <div class="modal-body">
                     <div class="form-group">
                         <label for="WatcherInputEmail">Email address</label>
-                        <input type="email" class="form-control" id="WatcherInputEmail1" placeholder="Enter email"
-                               required>
+                        <input type="email" class="form-control" id="WatcherInputEmail" name="WatchInputEmail"
+                               placeholder="Enter email" required>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <a id="emailModalSendButton" href="/watcher/email/1" class="btn btn-default">
-                    <input type="submit" class="btn" value="Visit Google"/>
-                </a>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <input type="submit" class="btn btn-primary" value="Save"/>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 <script>
     function showModal(data) {
-        $("#emailModalSendButton").attr("href", "/watcher/email/" + data);
+        $("#modalForm").attr("action", "/watcher/email/" + data);
         $("#emailModal").modal();
     }
 </script>
