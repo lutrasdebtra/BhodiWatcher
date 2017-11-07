@@ -24,6 +24,7 @@
                 <input type="submit" class="btn btn-primary btn-lg pr-0 pl-0 w-100"/>
             </div>
         </div>
+        {{ form_end(form) }}
         <div class="row mt-3">
             <div class="col-12">
                 <table class="table">
@@ -32,26 +33,24 @@
                         <th scope="col">#</th>
                         <th scope="col">Field 1</th>
                         <th scope="col">Field 2</th>
-                        <th scope="col-1"></th>
+                        <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td><a href="#"><i class="fa fa-envelope-o fa-lg fa-pull-right" aria-hidden="true"></i></a></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td><a href="#"><i class="fa fa-envelope-o fa-lg fa-pull-right" aria-hidden="true"></i></a></td>
-                    </tr>
+                    {% for job in jobs %}
+                        <tr>
+                            <th scope="row">{{ job['id'] }}</th>
+                            <td>{{ job['field_1'] }}</td>
+                            <td>{{ job['field_2'] }}</td>
+                            <td><a href="#" onclick="showModal('{{ job['id'] }}')"><i
+                                            class="fa fa-envelope-o fa-lg fa-pull-right" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
         </div>
-        {{ form_end(form) }}
     </div>
+    {{ include('watcher/email_modal.html.twig') }}
 {% endblock %}

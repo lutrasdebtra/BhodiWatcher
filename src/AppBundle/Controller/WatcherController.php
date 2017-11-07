@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -14,9 +15,13 @@ class WatcherController extends Controller
     /**
      * @Route("/watcher/search", name="watcher_search")
      */
-    public function searchAction(Request $request, \Swift_Mailer $mailer)
+    public function searchAction(Request $request)
     {
-        $defaultData = array('column_name' => 'Field 1', 'column_value' => '');
+        $jobs = array(
+            '1' => array('id' => '1', 'field_1' => 'test', 'field_2' => 'test'),
+            '2' => array('id' => '2', 'field_1' => 'test', 'field_2' => 'test'),
+        );
+        $defaultData = array('column_name' => 'Field 1', 'column_value' => 'Field 1');
         $form = $this->createFormBuilder($defaultData)
             ->add('column_name', ChoiceType::class, array(
                 'choices' => array(
@@ -30,20 +35,35 @@ class WatcherController extends Controller
         $form->handleRequest($request);
         // On submission.
         if ($form->isSubmitted() && $form->isValid()) {
-            $message = (new \Swift_Message('Failed Job'))
-                ->setFrom('synbioadmin@lanzatech.com')
-                ->setTo('stuart.bradley@lanzatech.com')
-                ->setBody(
-                    $this->renderView(
-                        'Emails/job.html.twig'
-                    ),
-                    'text/html'
-                );
-            #$mailer->send($message);
         }
 
         return $this->render('watcher/search.html.twig', array(
             'form' => $form->createView(),
+            'jobs' => $jobs
         ));
+    }
+
+    /**
+     * @Route("/watcher/email/{id}", name="watcher_email")
+     */
+    public function emailAction(Request $request, \Swift_Mailer $mailer, $id)
+    {
+        $jobs = array(
+            '1' => array('id' => '1', 'field_1' => 'test', 'field_2' => 'test'),
+            '2' => array('id' => '2', 'field_1' => 'test', 'field_2' => 'test'),
+        );
+        $message = (new \Swift_Message('Failed Job'))
+            ->setFrom('synbioadmin@lanzatech.com')
+            ->setTo('stuart.bradley@lanzatech.com')
+            ->setBody(
+                $this->renderView(
+                    'Emails/job.html.twig',
+                    array('job' => $jobs[$id])
+                ),
+                'text/html'
+            );
+        $mailer->send($message);
+
+        return $this->redirectToRoute("watcher_search");
     }
 }
