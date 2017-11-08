@@ -1,34 +1,54 @@
 <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content" id="modalMainContent">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Send Email</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <div id="modalLoadingIcon pt-5 pb-5" style="text-align: center;display: none;">
+                <i class="fa fa-refresh fa-spin fa-3x fa-fw" aria-hidden="true"></i>
+                <span class="sr-only">Refreshing...</span>
+            </div>
             <form action="/watcher/email/1" method="post" id="modalForm">
-                <div class="modal-body">
+                <div id="modalBody" class="modal-body">
                     <div class="form-group">
                         <label for="WatcherInputEmail">Email address</label>
                         <input type="email" class="form-control" id="WatcherInputEmail" name="WatchInputEmail"
                                placeholder="Enter email" required>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div id="modalFooter" class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <input type="submit" class="btn btn-primary" value="Save"/>
+                    <input type="submit" class="btn btn-primary" value="Save" onclick="showLoading()"/>
                 </div>
             </form>
         </div>
-    </div>
-</div>
+        <div class="modal-content" id="modalHiddenContent" style="display: none;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Send Email</h5>
+            </div>
 
-<script>
-    function showModal(data) {
-        $("#modalForm").attr("action", "/watcher/email/" + data);
-        $("#emailModal").modal();
-    }
-</script>
+            <div id="modalBody" class="modal-body">
+                <div id="modalLoadingIcon pt-5 pb-5" style="text-align: center;">
+                    <i class="fa fa-refresh fa-spin fa-3x fa-fw" aria-hidden="true"></i>
+                    <span class="sr-only">Refreshing...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showModal(data) {
+            $("#modalForm").attr("action", "/watcher/email/" + data);
+            $("#emailModal").modal();
+        }
+
+        function showLoading() {
+            $('#modalMainContent').hide();
+            $('#modalHiddenContent').show();
+        }
+    </script>
 
